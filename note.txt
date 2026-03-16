@@ -1,0 +1,40 @@
+raw 
+id,name,location,salary
+101,x,kol,50000  1st
+102,y,mum,60000
+103,z,ban,70000
+
+101,x,del,50000 2nd
+102,y,mum,80000
+104,p,ban,70000
+105,q,chn,90000
+
+target
+id,name,location,salary
+101,x,kol,50000
+102,y,mum,60000
+103,z,ban,70000
+
+
+
+spark = SparkSession.builder.appname("Deep").getorCreate()
+
+df = spark.read.format("csv").option("inferSchema",true).load("hdfs://ip:port/user/path/*.csv)
+
+df1 = df.filter(col("Age")>30)
+
+df2 = df.select(max(col("Salary"))).groupBy(col("Dept"))
+
+df2.write.format("csv").load("hdfs://ip:port/path)
+
+
+
+
+
+
+
+
+
+age>30
+deptwise max sal
+final result to hdfs

@@ -1,0 +1,35 @@
+class Solution:
+    def threeSum(self,nums,t):
+
+        ## RC ##
+        # APPROACH : DISSOLVE INTO 2 SUM AT EACH INDEX #
+        # 1. sort the numbers
+        # 2. fix on one number, make target = (-1*number) and find 2 sum combination.
+        # 3. repeat for all the numbers
+        # 4. two pointers start and end, skip same numbers, start++ and end-- depending upon the result.
+
+        ## EXAMPLE ##
+        # Nums : [-1,0,1,2,-1,-4]
+        # WITHOUT SORT ==> [[-1,2,-1],[1,0,-1],[-1,1,0]]
+        # WITH SORT ANSWER ==> [[1,0,-1],[2,-1,-1]]
+
+        nums.sort()
+        ans = set()
+        prev = float('inf')
+        for idx, val in enumerate(nums):
+            if val == prev:                         # early pruning, when the current value is same as prev, we donot need to search for 2 sum again.
+                continue
+            self.twoSum( nums[idx+1:], t-val, ans )
+            prev = val
+        return ans
+
+    def twoSum(self, nums, target, ans):
+        cache = {}
+        for idx, val in enumerate(nums):
+            if target - val in cache:
+                ans.add( (val, target - val, -target) ) # 3 sum wants the numbers, while 2sum wanted the indices
+            cache[val] = idx
+
+a = [12,3,1,2,-6,5,-8,6]
+n = 0
+print(Solution().threeSum(a,n))
